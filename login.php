@@ -60,18 +60,18 @@ include("db/db_conection.php");
 	
 if(isset($_POST['login']))
 {
-    $user_name=$_POST['username'];
-    $user_pass=$_POST['pass'];
+    $username=$_POST['username'];
+    $password=$_POST['pass'];
 	
-    $check_user="select * from users WHERE user_name='$user_name' limit 1";
+    $check_user="select * from users WHERE username='$username' limit 1";
 	
 	$run=mysqli_query($dbcon,$check_user);
 
 	$row=mysqli_fetch_array($run);
 	
-	$password_hash = $row['user_pass'];
+	$password_hash = $row['password'];
 
-	/*if( password_verify($user_pass, $password_hash) ) {
+	/*if( password_verify($password, $password_hash) ) {
 		echo 'Matched </br>';
 	} else {
 		echo 'no Matched </br>';
@@ -81,12 +81,15 @@ if(isset($_POST['login']))
 
 	//if(mysqli_num_rows($run))
 
-	if(password_verify($user_pass, $password_hash))
+	if(password_verify($password, $password_hash))
     {
         echo "<script>window.open('index.php','_self')</script>";
 
-        $_SESSION['email']=$row['user_email'];//here session is used and value of $user_email store in $_SESSION.
+        $_SESSION['email']=$row['email']; //here session is used and value of $user_email store in $_SESSION.
 
+		if($row['is_admin']){
+			$_SESSION['is_admin'] = true;
+		}
     }
     else
     {

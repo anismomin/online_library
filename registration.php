@@ -55,16 +55,16 @@ include("db/db_conection.php");//make connection here
 
 if(isset($_POST['register']))
 {
-    $user_name=$_POST['name'];//here getting result from the post array after submitting the form.
-    $user_pass=$_POST['pass'];//same
-    $user_email=$_POST['email'];//same
+    $username=$_POST['name'];//here getting result from the post array after submitting the form.
+    $password=$_POST['pass'];//same
+    $email=$_POST['email'];//same
 
 	//here query check weather if user already registered so can't register again.
-    $check_username_query="select * from users WHERE user_name='$user_name'";
+    $check_username_query="select * from users WHERE user_name='$username'";
     $un_run_query=mysqli_query($dbcon,$check_username_query);
 
 
-    if($user_name=='')
+    if($username=='')
     {
         //javascript use for input checking
         echo"<script>alert('Please enter the name')</script>";
@@ -72,29 +72,29 @@ if(isset($_POST['register']))
     
 	} elseif(mysqli_num_rows($un_run_query)>0) {
 		//javascript use for input checking
-        echo"<script>alert('Username $user_name is already exist in our database, Please try another one!')</script>";
+        echo"<script>alert('Username $username is already exist in our database, Please try another one!')</script>";
 		exit();//this use if first is not work then other will not show
 	}
 
-    if($user_pass=='')
+    if($password=='')
     {
         echo"<script>alert('Please enter the password')</script>";
 		exit();
     }
 
-    if($user_email=='')
+    if($email=='')
     {
         echo"<script>alert('Please enter the email')</script>";
     	exit();
     }
 
 	//here query check weather if user already registered so can't register again.
-    $check_email_query="select * from users WHERE user_email='$user_email'";
-    $run_query=mysqli_query($dbcon,$check_email_query);
+    $check_email_query="select * from users WHERE user_email='$email'";
+    $run_query=mysqli_query($dbcon, $check_email_query);
 
     if(mysqli_num_rows($run_query)>0)
     {
-		echo "<script>alert('Email $user_email is already exist in our database, Please try another one!')</script>";
+		echo "<script>alert('Email $email is already exist in our database, Please try another one!')</script>";
 		exit();
     }
 
@@ -103,10 +103,10 @@ if(isset($_POST['register']))
 		'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
 		'cost' => 12,
 	);
-  	$password_hash = password_hash($user_pass, PASSWORD_BCRYPT, $options);
+  	$password_hash = password_hash($password, PASSWORD_BCRYPT, $options);
 
 	//insert the user into the database.
-    $insert_user="insert into users (user_name,user_pass,user_email) VALUE ('$user_name','$password_hash','$user_email')";
+    $insert_user="insert into users (username,password,email) VALUE ('$username','$password_hash','$email')";
     
 	if(mysqli_query($dbcon,$insert_user))
     {

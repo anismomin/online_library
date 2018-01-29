@@ -7,9 +7,9 @@ if(!$_SESSION['email'])
 
 	$usertable = "CREATE TABLE IF NOT EXISTS `users` (
 	`id` int(11) NOT NULL auto_increment,
-	`user_name` varchar(100) NOT NULL,
-	`user_email` varchar(100) NOT NULL,
-	`user_pass` varchar(100) NOT NULL,
+	`username` varchar(100) NOT NULL,
+	`email` varchar(100) NOT NULL,
+	`password` varchar(100) NOT NULL,
 	`is_admin` tinyint(1) DEFAULT NULL,
 	PRIMARY KEY (`id`)
 	) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5";
@@ -50,17 +50,29 @@ if(!$_SESSION['email'])
 
 <html>
 <head>
+	<meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="bootstrap-3.2.0-dist\css\bootstrap.css"> <!--css file link in bootstrap folder-->
+    
     <title>
-        Registration
+        Online Library :: Home
     </title>
 </head>
 
 <body>
-	<h1>Welcome</h1><br>
-	<?php
-		echo $_SESSION['email'];
-	?>
-	<h1><a href="logout.php">Logout here</a> </h1>
+
+	<div class="container">
+	
+		<?php require_once('nav.php') ?>
+
+		<h1>Welcome</h1><br>
+		<?php
+			
+			if($_SESSION['is_admin']) {
+				echo '<h1>Yes i am admin.</h1>';
+			}
+		?>
+	
+	</div>
 </body>
 
 </html>
