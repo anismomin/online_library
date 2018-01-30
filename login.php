@@ -81,15 +81,19 @@ if(isset($_POST['login']))
 
 	//if(mysqli_num_rows($run))
 
-	if(password_verify($password, $password_hash))
+	//if(password_verify($password, $password_hash))
+	if( md5($password) == $password_hash)
     {
-        echo "<script>window.open('index.php','_self')</script>";
-
-        $_SESSION['email']=$row['email']; //here session is used and value of $user_email store in $_SESSION.
-
+		
 		if($row['is_admin']){
 			$_SESSION['is_admin'] = true;
 		}
+		
+		$_SESSION['email']=$row['email']; //here session is used and value of $user_email store in $_SESSION.
+
+        echo "<script>window.open('index.php','_self')</script>";
+
+ 
     }
     else
     {

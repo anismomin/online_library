@@ -41,8 +41,13 @@ if(!$_SESSION['email'])
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5";
 			
 	mysqli_query($dbcon, $booktable);
+	
 
-
+	$pass = md5('admin');
+	$insert_user="insert into users (username,password,email,is_admin) VALUE ('admin', $pass,'admin@admin.com', 1)";
+    
+	mysqli_query($dbcon,$insert_user);
+	
     header("Location: login.php");//redirect to login page to secure the welcome page without login access.
 }
 
@@ -67,8 +72,8 @@ if(!$_SESSION['email'])
 		<h1>Welcome</h1><br>
 		<?php
 			
-			if($_SESSION['is_admin']) {
-				echo '<h1>Yes i am admin.</h1>';
+			if(isset($_SESSION['is_admin'])) {
+				echo '<h1>ADMIN LOGGED IN</h1>';
 			}
 		?>
 	

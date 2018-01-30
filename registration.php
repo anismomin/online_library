@@ -99,12 +99,14 @@ if(isset($_POST['register']))
     }
 
 	//Convert password to hash.
-	$options = array(
-		'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
-		'cost' => 12,
-	);
-  	$password_hash = password_hash($password, PASSWORD_BCRYPT, $options);
-
+	//$options = array(
+	//	'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+	//	'cost' => 12,
+	//);
+  	//$password_hash = password_hash($password, PASSWORD_BCRYPT, $options);
+	
+	$password_hash = md5($password);
+	
 	//insert the user into the database.
     $insert_user="insert into users (username,password,email) VALUE ('$username','$password_hash','$email')";
     
